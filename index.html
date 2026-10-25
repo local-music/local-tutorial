@@ -12,7 +12,6 @@
     --accent: #30D158;
     --bg: #000000;
     --card: #1C1C1E;
-    --card-raised: #2C2C2E;
     --text: #FFFFFF;
     --muted: #98989F;
     --hairline: rgba(255, 255, 255, 0.10);
@@ -168,89 +167,6 @@
     border-color: rgba(48, 209, 88, 0.35);
   }
 
-  /* ---------- Info blocks ---------- */
-
-  .info {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .info h2 {
-    margin: 0 0 4px;
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  .formats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .chip {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    padding: 5px 11px;
-    border-radius: 999px;
-    color: var(--text);
-    background: var(--card-raised);
-    border: 1px solid var(--hairline);
-  }
-
-  details {
-    background: var(--card);
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius);
-    padding: 0 20px;
-  }
-
-  summary {
-    cursor: pointer;
-    list-style: none;
-    padding: 18px 0;
-    font-size: 17px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  summary::-webkit-details-marker { display: none; }
-
-  summary::after {
-    content: "";
-    width: 8px;
-    height: 8px;
-    flex: 0 0 auto;
-    border-right: 2px solid var(--muted);
-    border-bottom: 2px solid var(--muted);
-    transform: rotate(45deg);
-    transition: transform 0.2s ease;
-  }
-
-  details[open] summary::after { transform: rotate(-135deg); }
-
-  details .body {
-    padding-bottom: 20px;
-    border-top: 1px solid var(--hairline);
-    padding-top: 16px;
-  }
-
-  details .body p {
-    margin: 0 0 12px;
-    font-size: 16px;
-    color: var(--muted);
-  }
-
-  details .body p:last-child { margin-bottom: 0; }
-
-  details .body strong { color: var(--text); font-weight: 600; }
-
   /* ---------- Disclaimer ---------- */
 
   .disclaimer {
@@ -379,55 +295,13 @@
 
   </ol>
 
-  <section class="info">
-
-    <h2>Supported formats</h2>
-    <div class="formats">
-      <span class="chip">MP3</span>
-      <span class="chip">M4A</span>
-      <span class="chip">AAC</span>
-      <span class="chip">WAV</span>
-      <span class="chip">AIFF</span>
-      <span class="chip">CAF</span>
-      <span class="chip">MP4</span>
-      <span class="chip">MOV</span>
-    </div>
-
-    <details>
-      <summary>Importing several songs at once</summary>
-      <div class="body">
-        <p>In the Files picker you can select as many files as you like in one go. LOCAL imports them one at a time and shows a progress indicator.</p>
-        <p>If a file fails, LOCAL names it so you know which one to retry.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>Something didn't import</summary>
-      <div class="body">
-        <p><strong>Nothing appeared.</strong> The file may still be downloading from iCloud, or the picker returned a folder rather than files.</p>
-        <p><strong>"Unsupported format".</strong> Convert the file to one of the formats listed above first.</p>
-        <p><strong>A song won't play.</strong> Delete it from LOCAL and import it again from the original file.</p>
-        <p><strong>Missing title or artwork.</strong> The file has no embedded metadata. LOCAL never invents artist, album or artwork — the song still plays.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>Does it work offline?</summary>
-      <div class="body">
-        <p>Yes. Every imported file is stored on your iPhone, so playback works on a plane or anywhere with no signal.</p>
-        <p>Lyrics are the one exception — the first lookup needs a connection, then it's cached for offline use.</p>
-      </div>
-    </details>
-
-  </section>
-
   <div class="disclaimer">
     <strong>Please read</strong>
     Only import music you own or have permission to use. Respect copyright and the terms of your music providers. LOCAL does not download music, bypass protection on streaming services, or provide access to catalogues.
   </div>
 
   <footer>
-    <a href="https://apps.apple.com/app/idYOURAPPID">LOCAL</a> — an independent offline music player
+    <a href="https://apps.apple.com/us/app/local-music-player/id6824661652">LOCAL</a> — an independent offline music player
   </footer>
 
 </div>
