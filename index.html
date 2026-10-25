@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Import Your Music — LOCAL</title>
+<meta name="description" content="How to bring your own audio files into LOCAL, the offline music player for iPhone." />
+<meta name="theme-color" content="#000000" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2330D158'%3E%3Cpath d='M12 3v10.55A4 4 0 1 0 14 17V7h4V3z'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --accent: #30D158;
+    --bg: #000000;
+    --card: #1C1C1E;
+    --card-raised: #2C2C2E;
+    --text: #FFFFFF;
+    --muted: #98989F;
+    --hairline: rgba(255, 255, 255, 0.10);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    padding: 32px 20px 64px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Header ---------- */
+
+  .hero {
+    margin-bottom: 36px;
+  }
+
+  .hero h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  .hero h1 svg {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    fill: var(--accent);
+  }
+
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  /* ---------- Timeline ---------- */
+
+  .steps {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* The connecting line runs down the centre of the number circles. */
+  .steps::before {
+    content: "";
+    position: absolute;
+    left: 21px;
+    top: 22px;
+    bottom: 22px;
+    width: 2px;
+    border-radius: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--accent),
+      rgba(48, 209, 88, 0.45) 55%,
+      rgba(48, 209, 88, 0.08)
+    );
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: start;
+    gap: 16px;
+  }
+
+  .marker {
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    background: #0E1F13;
+    border: 1px solid rgba(48, 209, 88, 0.40);
+    box-shadow: 0 0 0 6px var(--bg);
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+
+  .card h2 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .card p + p { margin-top: 10px; }
+
+  .card strong { color: var(--text); font-weight: 600; }
+
+  .card .aside {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--hairline);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* Final step gets a filled accent treatment so the flow clearly ends. */
+  .step--done .marker {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+
+  .step--done .card {
+    background: rgba(48, 209, 88, 0.12);
+    border-color: rgba(48, 209, 88, 0.35);
+  }
+
+  /* ---------- Info blocks ---------- */
+
+  .info {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .info h2 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .formats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .chip {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 5px 11px;
+    border-radius: 999px;
+    color: var(--text);
+    background: var(--card-raised);
+    border: 1px solid var(--hairline);
+  }
+
+  details {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    padding: 0 20px;
+  }
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 0;
+    font-size: 17px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    flex: 0 0 auto;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  details[open] summary::after { transform: rotate(-135deg); }
+
+  details .body {
+    padding-bottom: 20px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 16px;
+  }
+
+  details .body p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  details .body p:last-child { margin-bottom: 0; }
+
+  details .body strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- Disclaimer ---------- */
+
+  .disclaimer {
+    margin-top: 40px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    background: rgba(48, 209, 88, 0.10);
+    border: 1px solid rgba(48, 209, 88, 0.28);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .disclaimer strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(48, 209, 88, 0.4);
+  }
+
+  /* ---------- Motion ---------- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .step {
+      animation: rise 0.45s both;
+    }
+    .step:nth-child(2) { animation-delay: 0.05s; }
+    .step:nth-child(3) { animation-delay: 0.10s; }
+    .step:nth-child(4) { animation-delay: 0.15s; }
+    .step:nth-child(5) { animation-delay: 0.20s; }
+    .step:nth-child(6) { animation-delay: 0.25s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  /* ---------- Small phones ---------- */
+
+  @media (max-width: 380px) {
+    body { padding: 24px 16px 48px; }
+    .hero h1 { font-size: 28px; }
+    .step { grid-template-columns: 38px 1fr; gap: 12px; }
+    .marker { width: 38px; height: 38px; font-size: 15px; }
+    .steps::before { left: 18px; top: 19px; bottom: 19px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg>
+      Import Your Music
+    </h1>
+    <p>Your music. Your files. All offline.</p>
+  </header>
+
+  <ol class="steps">
+
+    <li class="step">
+      <div class="marker" aria-hidden="true">1</div>
+      <div class="card">
+        <h2>Open your playlist or song</h2>
+        <p>Find the playlist or track you want in your streaming app and <strong>copy the link</strong>. This is just your reference list of what to collect.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="marker" aria-hidden="true">2</div>
+      <div class="card">
+        <h2>Note the tracks you want</h2>
+        <p>Save the link, or write the titles and artists down. LOCAL can't read your streaming account — this list is for you.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="marker" aria-hidden="true">3</div>
+      <div class="card">
+        <h2>Get copies you're allowed to keep</h2>
+        <p>For each track, use a file you already own: a download you bought, something from the artist's own store, or a copy already in your collection.</p>
+        <p class="aside">Streaming downloads are protected and can't be imported. Using them outside their app isn't permitted by that service's terms.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="marker" aria-hidden="true">4</div>
+      <div class="card">
+        <h2>Save the files to Files</h2>
+        <p>Put your audio files in the iPhone <strong>Files</strong> app — On My iPhone or iCloud Drive. AirDrop works too.</p>
+        <p class="aside">If a file sits in iCloud and hasn't downloaded yet, open it once in Files so it's stored on the device.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <div class="marker" aria-hidden="true">5</div>
+      <div class="card">
+        <h2>Open LOCAL and import</h2>
+        <p>Go to your <strong>Library</strong>, tap the import button in the top corner, then choose <strong>Import Audio Files</strong>.</p>
+      </div>
+    </li>
+
+    <li class="step step--done">
+      <div class="marker" aria-hidden="true">6</div>
+      <div class="card">
+        <h2>Done — your music is in</h2>
+        <p>Pick your files and LOCAL copies them in, reading the title, artist, album and artwork from each one. Add them to a playlist and you're finished.</p>
+      </div>
+    </li>
+
+  </ol>
+
+  <section class="info">
+
+    <h2>Supported formats</h2>
+    <div class="formats">
+      <span class="chip">MP3</span>
+      <span class="chip">M4A</span>
+      <span class="chip">AAC</span>
+      <span class="chip">WAV</span>
+      <span class="chip">AIFF</span>
+      <span class="chip">CAF</span>
+      <span class="chip">MP4</span>
+      <span class="chip">MOV</span>
+    </div>
+
+    <details>
+      <summary>Importing several songs at once</summary>
+      <div class="body">
+        <p>In the Files picker you can select as many files as you like in one go. LOCAL imports them one at a time and shows a progress indicator.</p>
+        <p>If a file fails, LOCAL names it so you know which one to retry.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Something didn't import</summary>
+      <div class="body">
+        <p><strong>Nothing appeared.</strong> The file may still be downloading from iCloud, or the picker returned a folder rather than files.</p>
+        <p><strong>"Unsupported format".</strong> Convert the file to one of the formats listed above first.</p>
+        <p><strong>A song won't play.</strong> Delete it from LOCAL and import it again from the original file.</p>
+        <p><strong>Missing title or artwork.</strong> The file has no embedded metadata. LOCAL never invents artist, album or artwork — the song still plays.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Does it work offline?</summary>
+      <div class="body">
+        <p>Yes. Every imported file is stored on your iPhone, so playback works on a plane or anywhere with no signal.</p>
+        <p>Lyrics are the one exception — the first lookup needs a connection, then it's cached for offline use.</p>
+      </div>
+    </details>
+
+  </section>
+
+  <div class="disclaimer">
+    <strong>Please read</strong>
+    Only import music you own or have permission to use. Respect copyright and the terms of your music providers. LOCAL does not download music, bypass protection on streaming services, or provide access to catalogues.
+  </div>
+
+  <footer>
+    <a href="https://apps.apple.com/app/idYOURAPPID">LOCAL</a> — an independent offline music player
+  </footer>
+
+</div>
+</body>
+</html>
