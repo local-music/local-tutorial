@@ -159,14 +159,13 @@
   /* ---------- Step screenshots ---------- */
 
   /*
-   * The image keeps its own proportions: no forced aspect ratio and no
-   * object-fit, so nothing is cropped. It is capped at 300px and centred,
-   * which suits a phone-shaped screenshot and also behaves for a wide one.
+   * Fills the card's content width. Proportions come from the image itself:
+   * no forced aspect ratio and no object-fit, so nothing is cropped.
    */
   .shot {
     display: block;
-    width: auto;
-    max-width: min(100%, 300px);
+    width: 100%;
+    max-width: 100%;
     height: auto;
     margin: 16px auto 0;
     border-radius: 12px;
@@ -246,7 +245,7 @@
     .marker { width: 38px; height: 38px; font-size: 15px; }
     .steps::before { left: 18px; top: 19px; bottom: 19px; }
     .card { padding: 16px; }
-    .shot { border-radius: 10px; max-width: min(100%, 240px); }
+    .shot { border-radius: 10px; }
   }
 </style>
 </head>
